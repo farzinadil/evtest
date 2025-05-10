@@ -27,3 +27,6 @@ ser.close()
 EOF
 
 sudo python3 /home/pi/hdmi_toggle_evdev.py
+
+printf 'PS1R\n' > /dev/ttyUSB0
+printf 'PS2R\n' > /dev/ttyUSB0
