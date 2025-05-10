@@ -4,7 +4,7 @@ import serial
 from evdev import InputDevice, ecodes, categorize
 
 # ————— CONFIG ——————————————————————————
-EVDEV_DEVICE = '/dev/input/event2'   # your pedal’s event node
+EVDEV_DEVICE = '/dev/input/event0'   # your pedal’s event node
 SERIAL_PORT  = '/dev/ttyUSB0'        # your USB-RS232 adapter
 BAUDRATE     = 115200
 

@@ -1,0 +1,29 @@
+ls /dev/ttyUSB*
+
+sudo apt install -y setserial
+sudo stty -F /dev/ttyUSB0 115200 cs8 -cstopb -parenb
+
+printf '\xA0\x01\x01\xA2' > /dev/ttyUSB0
+
+python3 - <<EOF
+import serial, time
+ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
+# bytes: A0 01 01 checksum
+ser.write(bytes([0xA0,0x01,0x01,(0xA0+0x01+0x01)&0xFF]))
+time.sleep(0.1)
+ser.close()
+EOF
+
+printf '\xA0\x01\x01\xA2' > /dev/ttyUSB0
+
+# Python
+python3 - <<EOF
+import serial, time
+ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
+# bytes: A0 01 02 checksum = A3
+ser.write(bytes([0xA0,0x01,0x02,(0xA0+0x01+0x02)&0xFF]))
+time.sleep(0.1)
+ser.close()
+EOF
+
+sudo python3 /home/pi/hdmi_toggle_evdev.py
